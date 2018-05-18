@@ -1,0 +1,211 @@
+* {
+  word-break: break-all;
+  box-sizing: border-box;
+  color: #444;
+}
+html {
+  margin: 0;
+  font-family: sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+}
+body {
+  margin: 0;
+}
+nav, footer {
+  z-index: 10;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  width: 100%;
+  background: #fafafa;
+}
+nav {
+  border-bottom: 1px solid #ebebeb;
+}
+nav input {
+  padding: 0 40px 0 10px;
+  line-height: 40px;
+  width: 100%;
+  font-size: 16px;
+  border: 0;
+}
+nav span {
+  margin-left: 20px;
+}
+nav select {
+  height: 40px;
+  width: 200px;
+  font-size: 16px;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+}
+footer {
+  top: auto;
+  bottom: 0;
+  border-top: 1px solid #ebebeb;
+}
+footer > div {
+  display: flex;
+  align-items: center;
+}
+footer small {
+  margin-right: 10px;
+  color: #999;
+}
+section {
+  margin-top: 20px;
+}
+h2 {
+  margin: 0;
+  padding: 0 10px;
+  color: cadetblue;
+  font-weight: normal;
+}
+ul {
+  padding: 0;
+  margin: 0;
+}
+li {
+  list-style: none;
+  padding: 10px;
+}
+li:nth-child(even) {
+  background: rgba(0,0,0,.05);
+}
+.logo {
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  width: 30%;
+  max-width: 240px;
+  opacity: 0.45;
+  z-index: 1;
+}
+.input-wrapper {
+  position: relative;
+  flex: 1;
+  border: 1px solid #ebebeb;
+}
+.input-wrapper small {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 40px;
+  width: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+.select-wrapper {
+  position: relative;
+  border: 1px solid #ebebeb;
+}
+.hl {
+  background: yellow;
+}
+.q {
+  z-index: 2;
+  position: fixed;
+  top: 63px;
+  bottom: 51px;
+  left: 0;
+  width: 100%;
+  overflow-y: auto;
+}
+.q.blur {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+.share .share-button {
+  display: flex;
+  align-items: center;
+}
+.share .skypeShare {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 4px;
+}
+.share .skypeShareLogo {
+  left: 2px !important;
+  top: 2px !important;
+}
+.share small + * {
+  margin-right: 4px;
+}
+.donate {
+  margin-left: auto;
+}
+.donate a {
+  display: inline-flex;
+}
+.donate a img {
+  height: 30px;
+}
+.contact {
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,.8);
+  opacity: 0;
+  transition: all .4s ease;
+}
+.contact.show {
+  z-index: 100;
+  opacity: 1;
+}
+.contact strong {
+  display: inline-block;
+  width: 80px;
+}
+.contact a.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 40px;
+}
+.warn {
+  color: #f05555;
+}
+
+@media screen and (max-width: 720px) {
+  nav select {
+    width: 40px;
+    border-left: 0;
+  }
+  nav span {
+    display: none;
+  }
+  .select-wrapper:before {
+    content: '▽';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    box-sizing: border-box;
+    background: #fff;
+    color: #999;
+    border-left: 0;
+    pointer-events: none;
+  }
+  footer small {
+    display: none;
+  }
+}

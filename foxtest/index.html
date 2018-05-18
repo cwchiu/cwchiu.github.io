@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Test">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="skyduck">
+  <meta name="copyright" content="skyduck">
+  <meta name="description" content="狐狸怎麼教 | 狐狸考試題庫，本題庫僅供學習參考">
+  <meta name="subject" content="Fox Test | 狐狸怎麼教">
+  <meta itemprop="name" content="Fox Test | 狐狸怎麼教">
+  <meta itemprop="image" content="https://skyduck0205.github.io/foxtest/fox.png">
+  <meta itemprop="description" content="狐狸怎麼教 | 狐狸考試題庫，本題庫僅供學習參考">
+  <meta property="og:title" content="Fox Test | 狐狸怎麼教" >
+  <meta property="og:url" content="https://skyduck0205.github.io/foxtest/">
+  <meta property="og:image" content="https://skyduck0205.github.io/foxtest/fox.png">
+  <meta property="og:description" content="狐狸怎麼教 | 狐狸考試題庫，本題庫僅供學習參考">
+  <meta property="og:site_name" content="Fox Test | 狐狸怎麼教">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="author" href="https://github.com/skyduck0205">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="76x76" href="fox.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="fox.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="fox.png">
+  <link rel="mask-icon" href="fox.png" color="#5bbad5">
+  <link rel="shortcut icon" href="fox.png">
+
+  <title>Fox Test</title>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PTM3NGR');</script>
+  <!-- End Google Tag Manager -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+  <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+  <script src="test0.js"></script>
+  <script src="test1.js"></script>
+  <script src="test2.js"></script>
+  <script src="test3.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <!-- Skype Sharing -->
+  <script>
+  (function(r, d, s) {
+    r.loadSkypeWebSdkAsync = r.loadSkypeWebSdkAsync || function(p) {
+      var js, sjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(p.id)) { return; }
+      js = d.createElement(s);
+      js.id = p.id;
+      js.src = p.scriptToLoad;
+      js.onload = p.callback
+      sjs.parentNode.insertBefore(js, sjs);
+    };
+    var p = {
+      scriptToLoad: 'https://swx.cdn.skype.com/shared/v/latest/skypewebsdk.js',
+      id: 'skype_web_sdk'
+    };
+    r.loadSkypeWebSdkAsync(p);
+  })(window, document, 'script');
+  </script>
+</head>
+<body ng-controller="TestController">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTM3NGR"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <img class="logo" src="fox.png">
+  <nav>
+    <div class="input-wrapper">
+      <input type="text" ng-model="search" placeholder="關鍵字" />
+      <small ng-if="search.length" ng-click="onClearClick()">╳</small>
+    </div>
+    <span>考試項目：</span>
+    <div class="select-wrapper">
+      <select ng-options="item.id as item.label for item in selector" ng-model="set"></select>
+    </div>
+  </nav>
+  <div class="q" ng-class="{ blur: contact }">
+    <section ng-repeat="(label, qs) in questions">
+      <h2>{{label}}</h2>
+      <ul>
+        <li ng-repeat="q in (qs | filter:search) track by $index" ng-bind-html="q | highlight:search"></li>
+      </ul>
+    </section>
+  </div>
+  <footer>
+    <div class="share">
+      <small>分享到</small>
+      <div class="share-button share-button-line"><div class="line-it-button" data-lang="zh_Hant" data-type="share-b" data-url="https://skyduck0205.github.io/foxtest/" style="display: none;"></div></div>
+      <div class="share-button share-button-skype"><div class='skype-share' data-href='https://skyduck0205.github.io/foxtest/' data-lang='zh-TW' data-text='狐狸怎麼教' data-style='square' ></div></div>
+    </div>
+    <div class="donate">
+      <small>作者: <a href="#contact">skyduck</a></small>
+      <small>|</small>
+      <small>{{trashTalks[talkIndex]}}</small>
+      <small class="warn">開通了→</small>
+      <a href="https://p.opay.tw/x8CAF" target="_blank"><img src="https://payment.opay.tw/Content/themes/WebStyle201404/images/allpay.png" /></a>
+    </div>
+  </footer>
+
+  <div class="contact" ng-class="{ show: contact }">
+    <a class="close" href="#">╳</a>
+    <img src="https://avatars2.githubusercontent.com/u/6456051?s=460&v=4">
+    <section>
+      <p><strong>Author: </strong>skyduck</p>
+      <p><strong>Email: </strong><a href="mailto:skyduck0205@gmail.com">skyduck0205@gmail.com</a></p>
+      <p><strong>Github: </strong><a href="https://github.com/skyduck0205" target="_blank">https://github.com/skyduck0205</a></p>
+    </section>
+  </div>
+
+  <script>
+    angular.module('Test', []);
+    angular
+      .module('Test')
+      .controller('TestController', function($scope, $window, $interval) {
+        $scope.contact = $window.location.search === '?contact' || $window.location.hash === '#contact';
+        $scope.selector = [
+          { id: 'test3', label: '平台五問' },
+          { id: 'test2', label: '工業互憐網' },
+          { id: 'test1', label: '工業大樹鋸' },
+          { id: 'test0', label: '小吃店老闆' }
+        ];
+        $scope.set = 'test3';
+        $scope.questions = {};
+        $scope.search = '';
+        $scope.trashTalks = [
+          '贊助: 贊助不會讓網站更好',
+          '贊助: 沒唸書拿高分良心不安，買張贖罪券吧',
+          '贊助: 謝謝你的葵瓜子，我的倉鼠會很開心',
+          '贊助: 請我吃午餐',
+          '贊助: 如果你100分，安慰沒有滿分的我',
+          '贊助: 地方的工程師需要你的贊助',
+          '贊助: 聽海哭的聲音這片海未免也太多情北七到天明'
+        ];
+        $scope.talkIndex = 0;
+        $scope.onClearClick = function() {
+          $scope.search = '';
+        };
+
+        // Event Handlers
+        $scope.$watch('set', function() {
+          $scope.questions = $window[$scope.set];
+        });
+        $window.onhashchange = function () {
+          $scope.contact = $window.location.hash === '#contact';
+          $scope.$apply();
+        }
+
+        $interval(function() { $scope.talkIndex = ($scope.talkIndex + 1) % $scope.trashTalks.length; }, 10000);
+      })
+      .filter('highlight', function($sce) {
+        return function(text, phrase) {
+          if (phrase) {
+            text = text.replace(new RegExp('('+phrase+')', 'gi'), '<span class="hl">$1</span>');
+          }
+          return $sce.trustAsHtml(text);
+        }
+      });
+  </script>
+</body>
+</html>
