@@ -198,7 +198,7 @@
     if (isew == null) {
       isew = false;
     }
-    if (Draw.i < 33 * Draw.rotate) {
+    if (Draw.i < 64 * Draw.rotate) {
       total = dData.length;
       while(true){
         uIndex = Math.floor(Math.random() * total);
