@@ -188,15 +188,11 @@
     dData.splice(Draw.winnerIndex, 1);
     
     Draw.drawing = false;
-    // console.log(`Draw done. (${keep.size})`);
-    keep = new Set();
     Draw.i = 0;
     refreshTickets();
     return afterDrawUpdate();
   };
 
-  var keep = new Set();
-  
   _D = function(){
     const els = $('.wheel .item .name');
     const s = new Set();
@@ -235,21 +231,8 @@
     }
     if (Draw.i < 64 * Draw.rotate) {
       // 產生唯一值      
-      const clone = shuffle(dData.slice(0));     
       item_index = 31 - (16 + Draw.i) % 32; // 範圍限制在 0-31
-
-      let pass = false;
-      for(let i=0,c=clone.length; i<c;++i){
-          console.log(clone[i]);
-          if( updateWheelItem(item_index, clone[i])){            
-              pass = true;
-              break;
-          }
-      }
-      if(!pass){
-          console.log('!!impossible');
-          return;
-      }
+      updateWheelItem(item_index, uniqueItem());
     
       Draw.i++;
       if (isew) {
@@ -267,32 +250,68 @@
         } else if (Draw.i === 33) {
           $('.pointer').addClass('show');
         }
-        if (Draw.i === 48) {
-          
+        if (Draw.i === 48) {          
           updateWheelItem(Draw.datum, Draw.winner);
-          return html;
+          return generateHTML(Draw.winner);
         }
       }
     }
   };
 
-  updateWheelItem = function(index, data) {
-      // console.log({index,data});
-      
+  uniqueItem = function(){
+      // 產生唯一值      
+      const clone = shuffle(dData.slice(0));     
+      // 目前顯示值
       const els = $('.wheel .item .id');
 
-      for(let i = 0, c=els.length; i<c;++i){             
-          
+      for(let j=0,jc=clone.length; j<jc;++j){
+          let got = true;
+          for(let i = 0, c=els.length; i<c;++i){                           
+            const value = els[i].innerHTML;
+            // 重複
+            if(value == clone[j].id){
+                got = false;
+                break;
+            }
+          }      
+      
+          if(got){
+              return clone[j];
+          }
+      }
+      throw new Error('not found');
+  };
+  
+  updateWheelItem = function(index, data) {
+      const els = $('.wheel .item .id');
+      
+      // 重複 id 處理
+      for(let i = 0, c=els.length; i<c;++i){                           
         const value = els[i].innerHTML;
         
         if(value == data.id){
-            return false;
-        }
+            if(index == i){
+                // 位置相同, 沒事
+                break;
+            }else{
+                // 位置不同, 更換顯示
+                let new_item = null;
+                while(true){
+                    new_item = uniqueItem();
+                    if(new_item.id != data.id){
+                        break;
+                    }
+                }
+                
+                $('.wheel .item')[i].innerHTML = generateHTML(new_item);
+            }
+            break;
+        }        
       }
-
     
       _D();
-      const html = generateHTML(data);;
+      // 指定位置顯示
+      const html = generateHTML(data);;      
       $('.wheel .item')[index].innerHTML = html;
       return true;
   };
@@ -375,3 +394,4 @@
   });
 
 }).call(this);
+//201812131107
