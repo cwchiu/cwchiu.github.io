@@ -153,6 +153,7 @@
       setTimeout(startDrawAnimate, 100);
     }
     total = dData.length;
+    // 中獎人
     Draw.winnerIndex = Math.floor(Math.random() * total);
     Draw.winner = dData[Draw.winnerIndex];
     $('.winners').prepend(generateHTML(Draw.winner, false));
@@ -175,8 +176,10 @@
     Draw.i = 0;
     drawWheelUpdate();
     
+    
     // 結束動畫時間
     setTimeout(afterDraw, Draw.speed * 1000);
+    
     return Draw.winner;
   };
 
@@ -185,31 +188,69 @@
     dData.splice(Draw.winnerIndex, 1);
     
     Draw.drawing = false;
-    console.log(`Draw done. (${keep.length})`);
-    keep = [];
+    // console.log(`Draw done. (${keep.size})`);
+    keep = new Set();
     Draw.i = 0;
     refreshTickets();
     return afterDrawUpdate();
   };
 
-  var keep = [];
+  var keep = new Set();
+  
+  _D = function(){
+    const els = $('.wheel .item .name');
+    const s = new Set();
+    const data = [];
+    for(let i = 0, c=els.length; i<c;++i){
+        if(els[i].innerHTML == ''){
+            return;
+        }
+        data.push(els[i].innerHTML);
+        s.add(els[i].innerHTML);
+    }
+    console.log(`check ${s.size} == ${els.length} ? ${s.size === els.length}`);
+    if(s.size != els.length){
+        console.log(data.sort());
+        alert('error');
+    }    
+  };
+  
+  function shuffle(arr) {
+    var i,
+        j,
+        temp;
+    for (i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+  };
+
   drawWheelUpdate = function(isew) {
-    var rand, total, uIndex;
+    var rand, total, uIndex, item_index, data;
     if (isew == null) {
       isew = false;
     }
     if (Draw.i < 64 * Draw.rotate) {
-      total = dData.length;
-      while(true){
-        uIndex = Math.floor(Math.random() * total);
-        if(!keep.includes(uIndex)){
-            keep.push(uIndex);                 
-            break;
-        }
-        console.log(`try again: ${uIndex} in ${keep}`);
+      // 產生唯一值      
+      const clone = shuffle(dData.slice(0));     
+      item_index = 31 - (16 + Draw.i) % 32; // 範圍限制在 0-31
+
+      let pass = false;
+      for(let i=0,c=clone.length; i<c;++i){
+          console.log(clone[i]);
+          if( updateWheelItem(item_index, clone[i])){            
+              pass = true;
+              break;
+          }
       }
-      console.log(uIndex);
-      $('.wheel .item')[31 - (16 + Draw.i) % 32].innerHTML = generateHTML(dData[uIndex]);
+      if(!pass){
+          console.log('!!impossible');
+          return;
+      }
+    
       Draw.i++;
       if (isew) {
         if (Draw.i < 32) {
@@ -220,30 +261,42 @@
         if (Draw.i === 1) {
           $('body').addClass('animateShow');
           rand = Math.floor(Math.random() * 4);
-          if (rand === 0) {
-            $('body').addClass('a');
-          }
-          if (rand === 1) {
-            $('body').addClass('b');
-          }
-          if (rand === 2) {
-            $('body').addClass('c');
-          }
-          if (rand === 3) {
-            $('body').addClass('d');
-          }
+          $('body').addClass(['a','b','c','d'][rand]);
         } else if (Draw.i === 32) {
           $('body').removeClass('animateShow').removeClass('a').removeClass('b').removeClass('c').removeClass('d');
         } else if (Draw.i === 33) {
           $('.pointer').addClass('show');
         }
         if (Draw.i === 48) {
-          return $('.wheel .item')[Draw.datum].innerHTML = generateHTML(Draw.winner);
+          
+          updateWheelItem(Draw.datum, Draw.winner);
+          return html;
         }
       }
     }
   };
 
+  updateWheelItem = function(index, data) {
+      // console.log({index,data});
+      
+      const els = $('.wheel .item .id');
+
+      for(let i = 0, c=els.length; i<c;++i){             
+          
+        const value = els[i].innerHTML;
+        
+        if(value == data.id){
+            return false;
+        }
+      }
+
+    
+      _D();
+      const html = generateHTML(data);;
+      $('.wheel .item')[index].innerHTML = html;
+      return true;
+  };
+  
   afterDrawUpdate = function() {
     if (Draw.i < 8) {
       if (Draw.i % 2 === 0) {
