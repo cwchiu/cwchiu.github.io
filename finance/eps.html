@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>除權息股價試算</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="container">
+<div id="app">
+  <form>
+      <div class="form-group">
+        <label for="a">全年流通在外普通股(A)</label>
+        <input type="number" v-model="a" id="a" class="form-control"></input>
+    </div>
+        <div class="form-group">
+          <label for="stockDividend">稅後淨利(B)</label>
+  <input type="number" v-model="b" id="b" class="form-control"></input>
+          </div>
+          <div class="form-group">
+            <label for="c">可轉換特別股(股數)</label>
+  <input type="number" v-model="c" id="c" class="form-control"></input>
+            </div>
+  
+          <div class="form-group">
+            <label for="d">可轉換特別股(面額, $)</label>
+  <input type="number" v-model="d" id="d" class="form-control"></input>
+            </div>
+
+          <div class="form-group">
+            <label for="e">可轉換特別股(轉換比例, %)</label>
+  <input type="number" v-model="e" id="e" class="form-control"></input>
+            </div>
+
+          <div class="form-group">
+            <label for="e2">可轉換特別股(轉普桶股比例)</label>
+  <input type="number" v-model="e2" id="e2" class="form-control"></input>
+            </div>
+
+          <div class="form-group">
+            <label for="f">可認購普通股</label>
+  <input type="number" v-model="f" id="f" class="form-control"></input>
+            </div>
+
+
+
+          <div class="form-group">
+            <label for="g">可認購普通股,每股認購價格</label>
+  <input type="number" v-model="g" id="g" class="form-control"></input>
+            </div>
+
+
+          <div class="form-group">
+            <label for="h">每股全年平均市價</label>
+  <input type="number" v-model="h" id="h" class="form-control"></input>
+            </div>
+
+
+          <div class="form-group">
+            <label for="i">認股權若執行可增加之普通股股東淨利</label>
+  <input type="number" v-model="i" id="i" class="form-control"></input>
+            </div>
+
+
+          <div class="form-group">
+            <label for="j">發放股利</label>
+  <input type="number" v-model="j" id="j" class="form-control"></input>
+            </div>
+
+
+            <div class="form-group">
+              <label >普通股股東淨利</label>
+  <label>{{c1}}</label>
+              </div>
+  
+            <div class="form-group">
+              <label >加權平均流通在外股數</label>
+  <label>{{c2}}</label>
+              </div>
+            <div class="form-group">
+              <label >基本每股盈餘(元)</label>
+  <label>{{c3}}</label>
+              </div>
+
+<h3>認股權</h3>
+            <div class="form-group">
+              <label >可收回股數</label>
+  <label>{{c4}}</label>
+              </div>
+
+
+            <div class="form-group">
+              <label >認股權若執行將增加之股數</label>
+  <label>{{c5}}</label>
+              </div>
+
+            <div class="form-group">
+              <label >認股權每增額股份盈餘</label>
+  <label>{{c6}}</label>
+              </div>
+
+<h3>可轉換特別股</h3>
+ <div class="form-group">
+              <label >可轉換特別股若轉換可增加之加權平均股數</label>
+  <label>{{c7}}</label>
+              </div>
+
+ <div class="form-group">
+              <label >可轉換特別股之每增額股份盈餘</label>
+  <label>{{c8}}</label>
+              </div>
+
+
+
+  </form>
+
+
+</div>
+<script type="module">
+// http://accounting01.pixnet.net/blog/post/178485595-%E6%AF%8F%E8%82%A1%E7%9B%88%E9%A4%98%E4%B9%8B%E8%A8%88%E7%AE%97
+
+  import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'
+  
+var app = new Vue({
+  el: '#app',
+  data: {
+    a: 6000000, // 全年流通在外普通股
+    b: 15900000, // 稅後淨利
+    c: 160000,
+    d: 100,
+    e: 7.5,
+    e2: 5,
+    f: 800000,
+    g: 20,
+    h: 25,
+    i: 0,
+    j: 1200000
+  },
+  computed: {
+    c1(){
+      return this.b - this.e*this.c;
+    },
+    
+    c2(){
+      // TODO: 12 代表什麼?
+      return this.a*12/12;
+    },
+    
+    c3(){
+      return this.c1 / this.c2;
+    },
+    
+    c4(){
+      return this.f * this.g/this.h;
+    },
+    
+    
+    c5(){
+      return this.f - this.c4;
+    },
+    
+    
+    c6(){
+      return this.i / this.c5;
+    },
+    
+    c7(){
+      return this.c * this.e2;
+    },
+    
+    
+    c8(){
+      return this.j / this.c7;
+    },
+    
+    
+  }
+})  
+</script>
+</body>
+</html>
