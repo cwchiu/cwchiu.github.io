@@ -30,7 +30,21 @@
         </form>
     </div>
     <script type="module">
-        import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js' var app = new Vue({ el: '#app', data: { stockPrice: 100, stockDividend: 2, cashDividend: 4, }, computed: { afterStockPrice: function(){ return (this.stockPrice - this.cashDividend)/(1+(this.stockDividend/10)); } } })
+import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        stockPrice: 100,
+        stockDividend: 2,
+        cashDividend: 4,
+    },
+    computed: {
+        afterStockPrice: function() {
+            return (this.stockPrice - this.cashDividend) / (1 + (this.stockDividend / 10));
+        }
+    }
+})     
     </script>
 </body>
 
