@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>股票目標價試算</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body class="container">
+    <h3>股票目標價試算</h3>
+    <div id="app">
+        <form>
+            <div class="form-group">
+                <label for="stockPrice">現金股利(元)</label>
+                <input type="number" v-model="a" id="stockPrice" min="0" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label for="stockDividend">股票股利(元)</label>
+                <input type="number" v-model="b" id="stockDividend" min="0" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label for="cashDividend">目前股價(元)</label>
+                <input type="number" v-model="c" id="cashDividend" class="form-control"></input>
+            </div>
+
+            <div class="form-group">
+                <label for="d">預期殖利率(%)</label>
+                <input type="number" v-model="d" id="d" class="form-control"></input>
+            </div>  
+            <div class="form-group">
+                <label>股價預估(元)</label>
+                <label>{{z1}}</label>
+            </div>
+
+            <div class="form-group">
+                <label>依據目前股價試算殖利率</label>
+                <label>{{z2}}%</label>
+            </div>
+
+            <div class="form-group">
+                <label>建議購買股價(元)</label>
+                <label>{{z3}}</label>
+            </div>
+        </form>
+    </div>
+    <script type="module">
+import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'
+var app = new Vue({
+    el: '#app',
+    data: {
+        a: 0.3,
+        b: 0.4,
+        c: 13,
+        d: 5
+    },
+    computed: {
+        z1: function() {
+            return Math.round(10*(this.a+this.b)/(this.d/100))/10;
+        },
+        z2: function(){
+          const a = (this.a/this.c)+(this.b/10);
+          return Math.round(a*1000)/10;
+        },
+        z3: function(){          
+          const a = (this.a+this.b)/this.z2
+          return Math.round(a*1000)/10;
+        }
+    }
+})     
+    </script>
+</body>
+
+</html>
